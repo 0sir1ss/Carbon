@@ -53,10 +53,10 @@ This is where Carbon comes in. I decided to make my own version of the oxyry obf
 :heavy_check_mark: Rename classes, functions, parameters and variables
 
 ## :no_entry_sign: Known Bugs ##
-Sometimes the renamer won't replace all instances of the name.
-This means that later down along the code you may still have instances of the old name mixed with the new name.
-Possible Solutions:
-    Add a for loop to replace it a couple times.
+Sometimes the renamer won't replace all instances of the name.\
+This means that later down along the code you may still have instances of the old name mixed with the new name.\
+Possible Solutions:\
+    - Add a for loop to replace it a couple times.
 
 
 ## :rocket: Technologies ##
