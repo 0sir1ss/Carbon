@@ -53,30 +53,10 @@ This is where Carbon comes in. I decided to make my own version of the oxyry obf
 :heavy_check_mark: Rename classes, functions, parameters and variables
 
 ## :no_entry_sign: Known Bugs ##
-Functions, Classes, Variables and Parameters are replaced across the file.
-This can cause problems as such:
-```py
-num = 1
-for i in range(5):
-  print(f"num: {num}")
-  num += 1
-```
-Becoming:
-```py
-IlIlllllIlI = 1
-for lIllllIIlIIIIIIlll in range(5):
-    print(f"IlIlllllIlI: {IlIlllllIlI}")
-    IlIlllllIlI += 1
-```
-The only way to avoid this is to avoid publicly using classes, functions, parameters and variables.
-```py
-lllIlIIlIIllIllIll = 1
-for lIlIIllIlIlIIIIl in range(5):
-    print(f"num: {lllIlIIlIIllIllIll}")
-    lllIlIIlIIllIllIll += 1
-```
-
-A fix is being looked into currently.
+Sometimes the renamer won't replace all instances of the name.
+This means that later down along the code you may still have instances of the old name mixed with the new name.
+Possible Solutions:
+    Add a for loop to replace it a couple times.
 
 
 ## :rocket: Technologies ##
