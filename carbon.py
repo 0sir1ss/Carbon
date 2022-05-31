@@ -133,8 +133,16 @@ def rename(filename: str):
         node.attr for node in ast.walk(parsed) if isinstance(node, ast.Attribute) and not isinstance(node.ctx, ast.Load)
     }
     for func in funcs:
-        for arg in func.args.args:
-            args.add(arg.arg)
+        if func.args.args:
+            for arg in func.args.args:
+                args.add(arg.arg)
+        if func.args.kwonlyargs:
+            for arg in func.args.kwonlyargs:
+                args.add(arg.arg)
+        if func.args.vararg:
+            args.add(func.args.vararg.arg)
+        if func.args.kwarg:
+            args.add(func.args.kwarg.arg)
 
     pairs = {}
     used = set()
@@ -168,8 +176,27 @@ def rename(filename: str):
         used.add(newname)
         pairs[attr] = newname
 
+    string_regex = r"('|\")[\x1f-\x7e]{1,}?('|\")"
+
+    original_strings = re.finditer(string_regex, code, re.MULTILINE)
+    originals = []
+
+    for matchNum, match in enumerate(original_strings, start=1):
+        originals.append(match.group().replace("\\", "\\\\"))
+
+    placeholder = os.urandom(16).hex()
+    code = re.sub(string_regex, f"'{placeholder}'", code, 0, re.MULTILINE)
+
+    for i in range(len(originals)):
+        for key in pairs:
+            originals[i] = re.sub(r"({.*)(" + key + r")(.*})", "\\1" + pairs[key] + "\\3", originals[i], re.MULTILINE)
+
     for key in pairs:
-        code = re.sub(fr"\b({key})\b", pairs[key], code)
+        code = re.sub(fr"\b({key})\b", pairs[key], code, re.MULTILINE)
+
+    replace_placeholder = r"('|\")" + placeholder + r"('|\")"
+    for original in originals:
+        code = re.sub(replace_placeholder, original, code, 1, re.MULTILINE)
 
     return code
 
