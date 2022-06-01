@@ -1,5 +1,5 @@
 # Made by 0sir1ss @ https://github.com/0sir1ss/Carbon
-import ast, re, random, io, tokenize, os, sys, platform
+import ast, re, random, io, tokenize, os, sys, platform, math
 
 is_windows = True if platform.system() == "Windows" else False
 
@@ -114,6 +114,11 @@ def remove_docs(source):
     out = '\n'.join(l for l in out.splitlines() if l.strip())
     return out
 
+def do_rename(pairs, code):
+    for key in pairs:
+        code = re.sub(fr"\b({key})\b", pairs[key], code, re.MULTILINE)
+    return code
+
 def rename(filename: str):
     with open(filename, "r") as file:
         code = file.read()
@@ -191,8 +196,15 @@ def rename(filename: str):
         for key in pairs:
             originals[i] = re.sub(r"({.*)(" + key + r")(.*})", "\\1" + pairs[key] + "\\3", originals[i], re.MULTILINE)
 
-    for key in pairs:
-        code = re.sub(fr"\b({key})\b", pairs[key], code, re.MULTILINE)
+    while True:
+        found = False
+        code = do_rename(pairs, code)
+        for key in pairs:
+            if re.findall(fr"\b({key})\b", code):
+                found = True
+        if found == False:
+            break
+
 
     replace_placeholder = r"('|\")" + placeholder + r"('|\")"
     for original in originals:
