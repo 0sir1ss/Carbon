@@ -168,6 +168,7 @@ def rename(filename: str):
         pairs[_class.name] = newname
 
     for arg in args:
+        if arg == 'self': continue
         newname = "".join(random.choice(["I", "l"]) for i in range(random.randint(8, 20)))
         while newname in used:
             newname = "".join(random.choice(["I", "l"]) for i in range(random.randint(8, 20)))
