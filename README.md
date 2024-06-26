@@ -41,7 +41,7 @@
 
 When looking around for python obfuscators, you might have found some like pyarmor, or pyminifier.\
 But then there's one that does actually obfuscate the code which can't be reversed to the original source. You can find it [here](https://pyob.oxyry.com/), but there's just one small caveat.\
-Purchasing it costs **USD $1998**.
+Purchasing it costs **USD $198**.
 
 Now that's not to say you can't use it for free, after all if you want to use it online it's free to use. But if you wish to use an offline cli version, well then you need to pay.
 
